@@ -29,6 +29,7 @@ function Header() {
       payload: null,
     });
     goToHome();
+    history.push("/signin");
   };
 
   const renderUserInfo = () => {
