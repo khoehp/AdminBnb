@@ -2,16 +2,18 @@ import Headers from "../common/components/header";
 import Home from "../common/components/home";
 import { lazy, Suspense } from "react";
 import { useEffect } from "react";
-import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { AuthRoute, PrivateRoute } from "./Guard";
 import { Layout, Spin } from "antd";
 import { useDispatch } from "react-redux";
 import { fetchProfileAction } from "../features/authentication/action";
 const { Sider, Content, Header, Footer } = Layout;
 const Room = lazy(() => import("../features/admin/room"));
-const Address = lazy(() => import("../features/admin/address"));
+const Addroom = lazy(() => import("../features/admin/address"));
+const RoomEdit = lazy(() => import("../features/admin/editRoom"));
 const RoomInfo = lazy(() => import("../features/admin/roomInfo"));
 const User = lazy(() => import("../features/admin/user"));
+const UserInfo = lazy(() => import("../features/admin/userInfo"));
 const AddAdmin = lazy(() => import("../features/admin/addAdmin"));
 const Signin = lazy(() => import("../features/authentication/signin"));
 const Signup = lazy(() => import("../features/authentication/signup"));
@@ -46,22 +48,48 @@ function App() {
               }
             >
               <Switch>
-                <PrivateRoute path="/" component={Room} exact />
-                <PrivateRoute path="/users" component={User} />
-                <PrivateRoute path="/address" component={Room} />
-                <PrivateRoute path="/roomInfo" component={RoomInfo} />
-                <PrivateRoute path="/editRoom" component={Address} />
-                <PrivateRoute path="/user/addUser" component={AddAdmin} />
+                <Route path="/custom" component={Signin}></Route>
+                <PrivateRoute
+                  path="/"
+                  component={Room}
+                  redirectPath="/"
+                  exact
+                />
+                <PrivateRoute path="/users" component={User} redirectPath="/" />
+                <PrivateRoute
+                  path="/user/addUser"
+                  component={AddAdmin}
+                  redirectPath="/"
+                  exact
+                />
+                <PrivateRoute
+                  path="/userInfo"
+                  component={UserInfo}
+                  redirectPath="/"
+                />
+                <PrivateRoute
+                  path="/addRoom"
+                  component={Addroom}
+                  redirectPath="/"
+                />
+                <PrivateRoute
+                  path="/roomEdit"
+                  component={RoomEdit}
+                  redirectPath="/"
+                />
+                <PrivateRoute
+                  path="/roomInfo"
+                  component={RoomInfo}
+                  redirectPath="/"
+                />
                 <AuthRoute path="/signin" component={Signin} redirectPath="/" />
                 <AuthRoute path="/signup" component={Signup} redirectPath="/" />
-                <Redirect to="/" />
+                {/* <Redirect to="/" /> */}
               </Switch>
             </Suspense>
           </Content>
         </Layout>
-        <Footer>
-          <h3>asds</h3>
-        </Footer>
+        <Footer></Footer>
       </Layout>
     </BrowserRouter>
   );

@@ -1,6 +1,8 @@
 import instance from "../../api/instance";
 export const SET_USER = "admin/SET_USER";
 export const SET_ROOM = "admin/SET_ROOM";
+export const SET_ROOMINFO = "admin/SET_ROOMINFO";
+export const SET_USERINFO = "admin/SET_USERINFO";
 const token = localStorage.getItem("token");
 console.log(token);
 export const fetchUserAction = async (dispatch) => {
@@ -32,15 +34,12 @@ export const fetchAddAdmin = async (user) => {
     alert(`Thêm quản trị thất bại ! ${err.response.data.content} `);
   }
 };
-export const fetchUpdataUser = async (user, id) => {
+export const fetchUpdataUser = async (id, user) => {
   try {
     const res = await instance.request({
-      url: "/api/users",
-      method: "PUTS",
+      url: `/api/users/${id}`,
+      method: "PUT",
       data: user,
-      params: {
-        id: id,
-      },
     });
     alert("Chỉnh sửa thành công");
   } catch (err) {
@@ -57,6 +56,7 @@ export const fetchDeleteUser = async (Id) => {
         id: Id,
       },
     });
+    console.log(res);
     alert("Xóa tài khoản thành công");
   } catch (err) {
     alert(`Xóa tài khoản thất bại !  ${err.response.data.content}`);
@@ -102,9 +102,10 @@ export const fetchEditRoomAction = async (id) => {
   try {
     const res = await instance.request({
       url: `/api/phong-thue/${id}`,
-      method: "POST",
+      method: "PUT",
       headers: { token },
     });
+    console.log(res);
     alert("Chỉnh sửa thành công");
   } catch (err) {
     alert("Chỉnh sửa thất bại");
@@ -122,4 +123,33 @@ export const fetchCreatRoomAction = async (data) => {
   } catch (err) {
     alert("Thêm phòng thất bại");
   }
+};
+
+export const fetchRoomInfoAction = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await instance.request({
+        url: `/api/phong-thue/${id}`,
+        method: "GET",
+      });
+      dispatch({
+        type: SET_ROOMINFO,
+        payload: res.data.content,
+      });
+    } catch (err) {}
+  };
+};
+export const fetchUserInfoAction = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await instance.request({
+        url: `/api/users/${id}`,
+        method: "GET",
+      });
+      dispatch({
+        type: SET_USERINFO,
+        payload: res.data.content,
+      });
+    } catch (err) {}
+  };
 };

@@ -4,9 +4,9 @@ const createRoute = (condition) => {
   return (props) => {
     const { path, component, redirectPath } = props;
     if (condition()) {
-      return <Route path={path} component={component} />;
+      return <Route path={path} component={component}/>;
     }
-    return <Redirect to={redirectPath} />;
+    // return <Redirect to={redirectPath} />;
   };
 };
 

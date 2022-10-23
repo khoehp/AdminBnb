@@ -32,13 +32,13 @@ function Room() {
 
   const editRooms = (rooms) => {
     localStorage.setItem("room", JSON.stringify(rooms));
-    history.push("editRoom");
+    history.push("/roomEdit");
   };
-  // const RoomInfo = async (id) => {
-  //   await fetchRoomInfo(id);
-  //   dispatch(fetchRoomAction);
-  //   history.push("/info");
-  // };
+  const RoomInfo = (rooms) => {
+    localStorage.setItem("room", JSON.stringify(rooms));
+    history.push("/roomInfo");
+  };
+
   useEffect(() => {
     fetchRoom();
   }, []);
@@ -100,6 +100,14 @@ function Room() {
               style={{ color: "red" }}
               icon={<DeleteOutlined />}
             ></Button>
+            <Button
+              className={styles.icon}
+              type="text"
+              onClick={() => RoomInfo(rooms.id)}
+              style={{ color: "blue" }}
+            >
+              Xem chi tiết
+            </Button>
           </div>
         );
       },

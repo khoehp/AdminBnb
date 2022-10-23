@@ -19,7 +19,7 @@ function Home() {
         },
         {
           label: "Quản lý người dùng",
-          key: "user",
+          key: "users",
           children: [
             {
               label: <NavLink to="/users">Management User</NavLink>,
@@ -32,16 +32,16 @@ function Home() {
           key: "rooms",
           children: [
             {
-              label: <NavLink to="/address">Quản lý phòng</NavLink>,
-              key: "address",
-            },
-            {
-              label: <NavLink to="/roomInfo">Thêm phòng</NavLink>,
-              key: "roomInfo",
-            },
-            {
-              label: <NavLink to="/">Thông tin phòng</NavLink>,
+              label: <NavLink to="/">Quản lý phòng</NavLink>,
               key: "room",
+            },
+            {
+              label: <NavLink to="/addRoom">Thêm phòng</NavLink>,
+              key: "addRoom",
+            },
+            {
+              label: <NavLink to="/roomInfo">Thông tin phòng</NavLink>,
+              key: "roomInfo",
             },
           ],
         },

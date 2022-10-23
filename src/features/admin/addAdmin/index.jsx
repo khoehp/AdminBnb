@@ -21,7 +21,6 @@ const tailLayout = {
 function AddAdmin() {
   const history = useHistory();
   const userLocal = JSON.parse(localStorage.getItem("user"));
-  // const id = userLocal.id;
 
   const users = {
     email: userLocal === null ? "" : userLocal.email,
@@ -67,7 +66,7 @@ function AddAdmin() {
       <h1>{userLocal === null ? "Add User" : "Update User"}</h1>
       <Form
         {...layout}
-        layout="horizontal" 
+        layout="horizontal"
         initialValues={{
           size: componentSize,
         }}
