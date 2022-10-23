@@ -1,8 +1,8 @@
 import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { fetchEditRoomAction } from "../action";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { fetchEditRoomAction, fetchRoomInfoAction } from "../action";
 const layout = {
   labelCol: {
     span: 6,
@@ -14,42 +14,31 @@ const layout = {
 function Address() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const roomLocal = JSON.parse(localStorage.getItem("room"));
+
+  const match = useRouteMatch();
+  const [form] = Form.useForm();
+
+  const roomId = match.params.id;
+
+  const roomLocal = useSelector((state) => state.admin.roomInfo);
   console.log(roomLocal);
-  const token = localStorage.getItem("token");
-  const rooms = {
-    tenPhong: roomLocal.tenPhong,
-    khach: roomLocal.khach,
-    phongNgu: roomLocal.phongNgu,
-    giuong: roomLocal.giuong,
-    phongTam: roomLocal.phongTam,
-    moTa: roomLocal.moTa,
-    giaTien: roomLocal.giaTien,
-    mayGiat: roomLocal.mayGiat,
-    banLa: roomLocal.banLa,
-    tivi: roomLocal.tivi,
-    dieuHoa: roomLocal.dieuHoa,
-    wifi: roomLocal.wifi,
-    bep: roomLocal.bep,
-    doXe: roomLocal.doXe,
-    hoBoi: roomLocal.hoBoi,
-    banUi: roomLocal.banUi,
-    maViTri: roomLocal.maViTri,
-    hinhAnh: roomLocal.hinhAnh,
-  };
-  console.log("123",roomLocal.id);
+
+  useEffect(() => {
+    dispatch(fetchRoomInfoAction(roomId));
+  }, [roomId]);
+
+  useEffect(() => {
+    if (roomLocal?.tenPhong) {
+      form.setFieldValue({ ...roomLocal });
+    }
+  }, [roomLocal?.tenPhong]);
+
   const info = useSelector((state) => state.admin.rooms.data);
-  console.log(info);
-  // const fetcEditRoom = async (id) => {
-  //   await fetchEditRoomAction(id, token);
-  // };
-  // const handleChange = (e) => {
-  //   SetRooms({ ...rooms, [e.target.name]: e.target.value });
-  //   console.log(e.target.value);
-  // };
+
   const handleSubmit = (values) => {
-    const rooms = { ...values };
-    fetchEditRoomAction(rooms.id, token);
+    values = { ...values };
+    console.log(values);
+    dispatch(fetchEditRoomAction(roomId, values))
     history.push("/room");
   };
 
@@ -63,10 +52,10 @@ function Address() {
       <Form
         {...layout}
         layout="horizontal"
-        initialValues={rooms}
+        form={form}
         onFinish={handleSubmit}
         onValuesChange={onFormLayoutChange}
-        // size={componentSize}
+        initialValues={{}}
       >
         <Form.Item label="Form Size" name="size">
           <Radio.Group>
@@ -76,82 +65,82 @@ function Address() {
           </Radio.Group>
         </Form.Item>
         <Form.Item label="Tên phòng" name="tenPhong">
-          <Input name="tenPhong" />
+          <Input  />
         </Form.Item>
         <Form.Item label="Số người" name="khach">
-          <InputNumber name="khach" />
+          <InputNumber  />
         </Form.Item>
         <Form.Item label="Phòng ngủ" name="phongNgu">
-          <InputNumber name="phongNgu" />
+          <InputNumber  />
         </Form.Item>
         <Form.Item label="Phòng tắm" name="phongTam">
-          <InputNumber name="phongTam" />
+          <InputNumber  />
         </Form.Item>
         <Form.Item label="Mô tả" name="moTa">
-          <Input name="moTa" />
+          <Input  />
         </Form.Item>
         <Form.Item label="Giá tiền" name="giaTien">
-          <InputNumber name="giaTien" />
+          <InputNumber  />
         </Form.Item>
         <Form.Item label="Máy giặt" name="mayGiat">
-          <Select name="mayGiat">
+          <Select>
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Bàn là" name="banLa">
-          <Select name="banLa">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Tivi" name="tivi">
-          <Select name="tivi">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Điều hòa" name="dieuHoa">
-          <Select name="dieuHoa">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Wfi" name="wifi">
-          <Select name="wifi">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Bếp" name="bep">
-          <Select name="bep">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Đỗ xe" name="doXe">
-          <Select name="doXe">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Hồ bơi" name="hoBoi">
-          <Select name="hoBoi">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Bàn ủi" name="banUi">
-          <Select name="banUi">
+          <Select >
             <Select.Option value="true">Có</Select.Option>
             <Select.Option value="false">Không</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Mã vị trí" name="maViTri">
-          <InputNumber name="maViTri" />
+          <InputNumber  />
         </Form.Item>
         <Form.Item label="Hình ảnh" name="hinhAnh">
-          <Input name="hinhAnh" />
+          <Input  />
         </Form.Item>
 
         <Button type="primary" htmlType="submit">

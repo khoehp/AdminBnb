@@ -4,17 +4,18 @@ import { NavLink } from "react-router-dom";
 
 function Home() {
   return (
-    <Menu className="bg-blue-500"
+    <Menu
+      className="bg-blue-500"
       style={{
         width: "100%",
-       
+
         color: "#fff",
       }}
       mode="inline"
       theme="dark"
       items={[
         {
-          label: ` Air Bnb`,
+          label: <NavLink to="/account">Thông tin tài khoản</NavLink>,
           key: "logo",
         },
         {

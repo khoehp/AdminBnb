@@ -20,20 +20,23 @@ function Room() {
   };
 
   const rooms = useSelector((state) => state.admin.rooms.data);
+  // console.log("rooms", rooms);
 
   const fetchRoom = () => {
     dispatch(fetchRoomAction(config, changeTotalCount));
   };
+
   const deleteRoom = async (id) => {
     await fetchDeleteRoom(id, token);
     // dispatch(fetchRoomAction);
     fetchRoom();
   };
 
-  const editRooms = (rooms) => {
-    localStorage.setItem("room", JSON.stringify(rooms));
-    history.push("/roomEdit");
-  };
+  // const editRooms = (rooms) => {
+  //   localStorage.setItem("room", JSON.stringify(rooms));
+  //   // history.push(`/roomEdit/${id}`);
+  // };
+
   const RoomInfo = (rooms) => {
     localStorage.setItem("room", JSON.stringify(rooms));
     history.push("/roomInfo");
@@ -90,7 +93,9 @@ function Room() {
               className={styles.icon}
               type="text"
               style={{ color: "blue" }}
-              onClick={() => editRooms(rooms)}
+              onClick={() => {
+                history.push(`/roomEdit/${rooms.id}`)
+              }}
               icon={<EditOutlined />}
             ></Button>
             <Button

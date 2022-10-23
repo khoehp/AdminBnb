@@ -10,11 +10,13 @@ import { fetchProfileAction } from "../features/authentication/action";
 const { Sider, Content, Header, Footer } = Layout;
 const Room = lazy(() => import("../features/admin/room"));
 const Addroom = lazy(() => import("../features/admin/address"));
+const Account = lazy(() => import("../features/admin/account"));
 const RoomEdit = lazy(() => import("../features/admin/editRoom"));
 const RoomInfo = lazy(() => import("../features/admin/roomInfo"));
 const User = lazy(() => import("../features/admin/user"));
 const UserInfo = lazy(() => import("../features/admin/userInfo"));
 const AddAdmin = lazy(() => import("../features/admin/addAdmin"));
+const AddUser = lazy(() => import("../features/admin/addUser"));
 const Signin = lazy(() => import("../features/authentication/signin"));
 const Signup = lazy(() => import("../features/authentication/signup"));
 
@@ -55,9 +57,15 @@ function App() {
                   redirectPath="/"
                   exact
                 />
+                  <PrivateRoute
+                  path="/account"
+                  component={Account}
+                  redirectPath="/"
+                />
                 <PrivateRoute path="/users" component={User} redirectPath="/" />
+                <PrivateRoute path="/user/addUser" component={AddUser} redirectPath="/" />
                 <PrivateRoute
-                  path="/user/addUser"
+                  path="/user/editUser/:id"
                   component={AddAdmin}
                   redirectPath="/"
                   exact
@@ -67,13 +75,13 @@ function App() {
                   component={UserInfo}
                   redirectPath="/"
                 />
-                <PrivateRoute
-                  path="/addRoom"
+                <Route
+                  path="/roomEdit/:id"
                   component={Addroom}
                   redirectPath="/"
                 />
                 <PrivateRoute
-                  path="/roomEdit"
+                  path="/addRoom"
                   component={RoomEdit}
                   redirectPath="/"
                 />

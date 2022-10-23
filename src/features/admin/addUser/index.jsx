@@ -1,10 +1,10 @@
-import { Button, DatePicker, Form, Radio, Select, Input } from "antd";
-import React, { useState } from "react";
-import { useEffect } from "react";
+// import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { fetchAddAdmin, fetchUpdataUser, fetchUserInfoAction } from "../action";
-
+import { Button, DatePicker, Form, Radio, Select, Input } from "antd";
+import React, { useState } from "react";
+import { useEffect } from "react";
 const layout = {
   labelCol: {
     span: 6,
@@ -19,41 +19,24 @@ const tailLayout = {
     span: 16,
   },
 };
-
-function AddAdmin() {
+function AddUser() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const match = useRouteMatch();
-  const userId = match.params.id;
-  const users = useSelector((state) => state.admin.userInfo);
-  console.log(users);
-  useEffect(() => {
-    dispatch(fetchUserInfoAction(userId));
-  }, [userId]);
 
-  const userLocal = JSON.parse(localStorage.getItem("user"));
+  // useEffect(() => {
+  //   dispatch(fetchUserInfoAction(userId));
+  // }, [userId]);
 
-  const renderButton = () => {
-    return (
-      <Button type="primary" htmlType="submit" className="justify-items-center">
-        Update
-      </Button>
-    );
-  };
-
-  const handelSubmit = (values) => {
-    const user = { ...values };
-
-    fetchUpdataUser(userLocal.id);
-    localStorage.removeItem("user");
+  const handelSubmit = (value) => {
+    dispatch(fetchAddAdmin(value));
+    // localStorage.removeItem("user");
     history.push("/users");
   };
 
   const [componentSize, setComponentSize] = useState("default");
-
   return (
     <div>
-      <h1 className="text-center text-3xl text-blue-500 py-5">Update User</h1>
+      <h1 className="text-center text-3xl">Add User</h1>
       <Form
         {...layout}
         layout="horizontal"
@@ -160,10 +143,14 @@ function AddAdmin() {
           </Select>
         </Form.Item>
 
-        <Form.Item>{renderButton()}</Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );
 }
 
-export default AddAdmin;
+export default AddUser;

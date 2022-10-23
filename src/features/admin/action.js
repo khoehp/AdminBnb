@@ -98,19 +98,21 @@ export const fetchDeleteRoom = async (id) => {
   }
 };
 
-export const fetchEditRoomAction = async (id) => {
+export const fetchEditRoomAction = async (id, infoRoom) => {
   try {
     const res = await instance.request({
       url: `/api/phong-thue/${id}`,
       method: "PUT",
-      headers: { token },
+      data: infoRoom,
+      // headers: { token },
     });
     console.log(res);
     alert("Chỉnh sửa thành công");
   } catch (err) {
-    alert("Chỉnh sửa thất bại");
+   console.log(err);
   }
 };
+
 export const fetchCreatRoomAction = async (data) => {
   try {
     const res = await instance.request({

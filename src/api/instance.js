@@ -3,7 +3,8 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
   headers: {
-    TokenCybersoft: process.env.REACT_APP_TOKEN_CYBERSOFT,
+    tokenCybersoft : process.env.REACT_APP_TOKEN_CYBERSOFT,
+    token: localStorage.getItem("token")
   },
   timeout: 10000,
 });
@@ -13,7 +14,7 @@ const instance = axios.create({
 instance.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    Authorization: "Bearer " + localStorage.getItem("token"),
+    // Authorization: localStorage.getItem("token"),
   };
   return config;
 });

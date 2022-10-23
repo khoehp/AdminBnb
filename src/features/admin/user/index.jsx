@@ -14,18 +14,18 @@ function User() {
 
   const fetch = async () => {
     await dispatch(fetchUserAction);
-    console.log("aaa");
   };
   useEffect(() => {
     fetch();
   }, []);
-  const editUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    history.push("/user/addUser");
-  };
+  
   const deteleUser = async (Id) => {
     await fetchDeleteUser(Id);
     fetch();
+  };
+  const UserInfo = (users) => {
+    localStorage.setItem("user", JSON.stringify(users));
+    history.push("/userInfo");
   };
   const columns = [
     {
@@ -63,7 +63,9 @@ function User() {
             <Button
               type="text"
               style={{ color: "blue" }}
-              onClick={() => editUser(userInfo)}
+              onClick={() =>
+                
+                history.push(`/user/editUser/${userInfo.id}`)}
               icon={<EditOutlined />}
               className={styles.icon}
             ></Button>
@@ -74,35 +76,20 @@ function User() {
               style={{ color: "red" }}
               icon={<DeleteOutlined />}
             ></Button>
+            <Button
+              type="text"
+              className={styles.icon}
+              onClick={() => UserInfo(userInfo.id)}
+              style={{ color: "blue" }}
+            >
+              Chi tiết
+            </Button>
           </div>
         );
       },
     },
   ];
-  // const data = [
-  //   {
-  //     id: "1",
-
-  //     name: "John Brown",
-  //     age: 32,
-  //     email: "New York No. 1 Lake Park",
-  //     tags: "developer",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Jim Green",
-  //     age: 42,
-  //     email: "London No. 1 Lake Park",
-  //     tags: "developer",
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Joe Black",
-  //     age: 32,
-  //     email: "Sidney No. 1 Lake Park",
-  //     tags: "developer",
-  //   },
-  // ];
+ 
   const data = (arr) => {
     let users = [];
     arr.forEach((user, index, array) => {
